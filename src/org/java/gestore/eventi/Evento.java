@@ -40,10 +40,10 @@ public class Evento {
 			
 			this.data = data;
 		}
-		private int getPostiTotali() {
+		public int getPostiTotali() {
 			return postiTotali;
 		}
-		public void setPostiTotali(int postiTotali) throws Exception {
+		private void setPostiTotali(int postiTotali) throws Exception {
 			
 			if(postiTotali <= 0) {
 				throw new Exception("Il numero di posti totali deve essere maggiore di 0");
@@ -51,36 +51,48 @@ public class Evento {
 			
 			this.postiTotali = postiTotali;
 		}
-		private int getPostiPrenotati() {
+		public int getPostiPrenotati() {
 			return postiPrenotati;
 		}
-		public void setPostiPrenotati(int postiPrenotati) {
+		private void setPostiPrenotati(int postiPrenotati) {
 			this.postiPrenotati = postiPrenotati;
 		}
 		
-		public void prenota() {
+		public void prenotare(int postiPrenotati) throws Exception {
 			
-			postiPrenotati = postiPrenotati + 1;
+			if ((this.postiPrenotati + postiPrenotati) <= this.postiTotali) {
+
+				this.postiPrenotati = this.postiPrenotati + postiPrenotati;
+			} else {
+				
+				throw new Exception("Non ci sono abbastaza posti diponibili, ne hai a disposizione: " + getPostiTotali());
+			}
 		}
 		
-		public void disdici() {
+		public void disdire(int postiDisdetti) throws Exception {
 			
-			postiPrenotati = postiPrenotati - 1;
+			if (postiDisdetti <= this.postiPrenotati) {
+				
+				this.postiPrenotati = this.postiPrenotati - postiDisdetti;
+			} else {
+				
+				throw new Exception("Hai disdetto per troppe persone, hai prenotato per: " + getPostiPrenotati());
+			}
 		}
 		
 		protected String getEventoString() {
 			
-			return "Titolo: " + getTitolo() 
+			return "\nNome evento: " + getTitolo() 
 				+ "\nData: " + getData()
 				+ "\nPosti Totali: " + getPostiTotali()
-				+ "\nPosti Prenotati: " + getPostiPrenotati();
+				+ "\nPosti Prenotati: " + getPostiPrenotati() + "\n";
 		}
 		
 		
 		@Override
 		public String toString() {
 			
-			return "(E) " + getEventoString();
+			return getEventoString();
 		}
 
 }
