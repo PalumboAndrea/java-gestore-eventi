@@ -1,6 +1,11 @@
 package org.java.gestore.eventi;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.Scanner;
+
+import java.math.BigDecimal;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
@@ -20,15 +25,21 @@ public class Main {
 					String titolo = sc.nextLine();
 					System.out.println("Inserisci la data dell'evento (formato anno-mese-giorno)");
 					String data = sc.nextLine();
+					System.out.println("Inserisci l'ora dell'evento (formato ore:minuti)");
+					String orario = sc.nextLine();
+					System.out.println("Inserisci il prezzo dell'evento");
+					String prezzo = sc.nextLine();
 					
-					Evento e = new Evento (titolo, data);
+					BigDecimal a = new BigDecimal(prezzo);
 					
-					System.out.println("Hai a disposizione: " + e.getPostiTotali() + " posti." + " Quanti ne vuoi riservare?");
+					Concerto c = new Concerto(titolo, data, LocalTime.from(DateTimeFormatter.ofPattern("HH:mm").parse(orario)), a);
+					
+					System.out.println("Hai a disposizione: " + c.getPostiTotali() + " posti." + " Quanti ne vuoi riservare?");
 					int postiPrenotati = sc.nextInt();
 					sc.nextLine();
-					e.prenotare(postiPrenotati);
+					c.prenotare(postiPrenotati);
 					
-					System.out.println(e.toString());
+					System.out.println(c.toString());
 					
 					while (true) {
 						System.out.println("Premi 1 per disdire, 2 per aggiungere prenotazioni e 3 per uscire:");
@@ -41,9 +52,9 @@ public class Main {
 								System.out.println("Inserire il numero di persone da disdire:");
 								int postiDisdetti = sc.nextInt();
 								sc.nextLine();
-								e.disdire(postiDisdetti);
+								c.disdire(postiDisdetti);
 								
-								System.out.println(e.toString());
+								System.out.println(c.getEventoString());
 								break;
 							}
 							
@@ -52,14 +63,14 @@ public class Main {
 								System.out.println("Inserire il numero di persone da aggiungere:");
 								int postiAggiunti = sc.nextInt();
 								sc.nextLine();
-								e.prenotare(postiAggiunti);
+								c.prenotare(postiAggiunti);
 								
-								System.out.println(e.toString());
+								System.out.println(c.getEventoString());
 								break;
 							}
 							
 							case 3: {
-								System.out.println(e.toString());
+								System.out.println(c.toString());
 								return;
 							}
 				
