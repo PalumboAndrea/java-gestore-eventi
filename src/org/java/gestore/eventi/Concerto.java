@@ -52,9 +52,9 @@ public class Concerto extends Evento{
 	@Override
 	public String toString() {
 		
-		return 	"\nTitolo: " + getTitolo()
-				+"\nOra: " + getOra()
-				+ "\nPrezzo: " + getPriceFormat(prezzo) + "\n";
+		return 	"Ora: " + getOra() + " - "
+				+ "Nome evento: " + getTitolo() + " - "
+				+ "Prezzo: " + getPriceFormat(prezzo);
 	}
 	
 }

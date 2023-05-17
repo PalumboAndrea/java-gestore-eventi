@@ -1,100 +1,58 @@
 package org.java.gestore.eventi;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAccessor;
 import java.util.Scanner;
 
 import java.math.BigDecimal;
 
-public class Main {
+public class Main{
 	public static void main(String[] args) throws Exception {
 		
 		Scanner sc = new Scanner(System.in);
 		
-		System.out.println("Premi 1 per creare un evento, 2 per uscire");
-		int choice = sc.nextInt();
-		sc.nextLine();
+		while(true) {
+			
+			System.out.println("Premi 1 per creare un programma di eventi, 2 per un evento singolo o 3 per uscire");
+			int choice = sc.nextInt();
+			sc.nextLine();
 
-		try {
-			
-			switch(choice) {
-			
-				case 1: {
-					System.out.println("Inserisci il nome dell'evento");
-					String titolo = sc.nextLine();
-					System.out.println("Inserisci la data dell'evento (formato anno-mese-giorno)");
-					String data = sc.nextLine();
-					System.out.println("Inserisci l'ora dell'evento (formato ore:minuti)");
-					String orario = sc.nextLine();
-					System.out.println("Inserisci il prezzo dell'evento");
-					String prezzo = sc.nextLine();
-					
-					BigDecimal a = new BigDecimal(prezzo);
-					
-					Concerto c = new Concerto(titolo, data, LocalTime.from(DateTimeFormatter.ofPattern("HH:mm").parse(orario)), a);
-					
-					System.out.println("Hai a disposizione: " + c.getPostiTotali() + " posti." + " Quanti ne vuoi riservare?");
-					int postiPrenotati = sc.nextInt();
-					sc.nextLine();
-					c.prenotare(postiPrenotati);
-					
-					System.out.println(c.toString());
-					
-					while (true) {
-						System.out.println("Premi 1 per disdire, 2 per aggiungere prenotazioni e 3 per uscire:");
-						choice = sc.nextInt();
-						sc.nextLine();
-						switch(choice) {
-						
-							case 1: {
-								
-								System.out.println("Inserire il numero di persone da disdire:");
-								int postiDisdetti = sc.nextInt();
-								sc.nextLine();
-								c.disdire(postiDisdetti);
-								
-								System.out.println(c.getEventoString());
-								break;
-							}
-							
-							case 2: {
-								
-								System.out.println("Inserire il numero di persone da aggiungere:");
-								int postiAggiunti = sc.nextInt();
-								sc.nextLine();
-								c.prenotare(postiAggiunti);
-								
-								System.out.println(c.getEventoString());
-								break;
-							}
-							
-							case 3: {
-								System.out.println(c.toString());
-								return;
-							}
+			try {
 				
-						}
+				switch(choice) {
+				
+					case 1: {
 						
+						Helper.programsQuestions();
+						System.out.println("\nGrazie e buona giornata");
+						return;
 					}
 					
-				}
-				case 2: {
+					case 2: {
+						
+						Helper.eventQuestions();
+						System.out.println("\nGrazie e buona giornata");
+						return;
+					}
 					
-					System.out.println("Grazie e buona giornata");
-					sc.close();
-					return;
-				}
+					case 3: {
+						
+						System.out.println("\nGrazie e buona giornata");
+						sc.close();
+						return;
+					}
+				}	
 				
-			
-			}	
-			
-		} catch (Exception e){
+			} catch (Exception e){
 
-			System.err.println("Errore: \n" + e.getMessage());
+				System.err.println("Errore: \n" + e.getMessage());
+			}
+			
+			sc.close();
 		}
 		
-		sc.close();
+		
 		
 
 	}
